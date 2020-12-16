@@ -1,3 +1,0 @@
-[submodule "third-party/ebcppframework"]
-	path = third-party/ebcppframework
-	url = https://github.com/EBToolsCpp/EBCPPFramework.git
