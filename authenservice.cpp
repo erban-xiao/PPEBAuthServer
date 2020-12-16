@@ -4,7 +4,8 @@
 
 #include "authenservice.h"
 #include "third-party/ebcppframework/third-party/libgo/coroutine.h"
-#include "third-party/ebcppframework/ebnetwork/ebservermanager.h"
+#include "third-party/ebcppframework/ebnetwork/server//ebservermanager.h"
+#include "third-party/ebcppframework/ebnetwork/ebhostinfo.h"
 eb_tools::EBResult<> AuthenService::Start()
 {
 
@@ -14,7 +15,7 @@ eb_tools::EBResult<> AuthenService::Start()
 	std::shared_ptr<eb_tools::EBHostInfo> hostInfo(new eb_tools::EBHostInfo);
 	hostInfo->SetIpDomain("127.0.0.1");
 	hostInfo->SetPort(1234);
-	hostInfo->SetPort("/");
+	hostInfo->SetPath("/");
 	serverManager.AddListen(hostInfo,"demo_host",1,[=]())
 	//start
 	co_sched.Start();
