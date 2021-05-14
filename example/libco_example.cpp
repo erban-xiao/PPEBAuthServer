@@ -3,10 +3,10 @@
 //
 #include <queue>
 #include <../include/libco/co_routine.h>
-#include "ebresult.h"
+//#include "ebresult.h"
 int main(int argc,char* argv[])
 {
 	stCoRoutine_t* consumer_routine;
-	co_create(&consumer_routine,NULL,)
+//	co_create(&consumer_routine,NULL,)
 	return 0;
 }
