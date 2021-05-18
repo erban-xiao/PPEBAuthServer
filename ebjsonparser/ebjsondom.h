@@ -5,11 +5,11 @@
 #ifndef EBJsoNDom_H
 #define EBJsoNDom_H
 
-#include <ebexception/ebexception.h>
-#include "third-party/rapidjson/document.h"
+#include <../ebexception/ebexception.h>
+#include "rapidjson/document.h"
 #include "ebjsonelement.h"
-#include "ebresult/ebresult.h"
-#include "ebresult/ebdata.h"
+#include "../ebresult/ebresult.h"
+#include "../ebresult/ebdata.h"
 namespace eb_tools
 {
 	class EBJsoNDom
@@ -56,9 +56,8 @@ T EBJsoNDom::GetSubNodeValue(const std::string& key, bool permit_null_node, cons
 			else
 			{
 				throw EBException(
-					EBResult<>(
-						em_json_parser,
-						em_parse_json_not_tar_type_node,
+					EBResult(
+						em_json_not_tar_type_node,
 						"node is not target type :{0}", typeid(T))
 				);
 			}
@@ -66,9 +65,8 @@ T EBJsoNDom::GetSubNodeValue(const std::string& key, bool permit_null_node, cons
 		else
 		{
 			throw EBException(
-				EBResult<>(
-					em_json_parser,
-					em_parse_json_no_find_tar_node,
+				EBResult(
+					em_json_no_find_tar_node,
 					"no find target node, key is : {0}", key
 				)
 			);
@@ -93,9 +91,8 @@ T EBJsoNDom::Get()
 	if (!m_doc.Is<T>())
 	{
 		throw EBException(
-			EBResult<>(
-				em_json_parser,
-				em_parse_json_not_tar_type_node,
+			EBResult(
+				em_json_not_tar_type_node,
 				"the dom node is not tar type node, type :{0}", typeid(T)
 			)
 		);

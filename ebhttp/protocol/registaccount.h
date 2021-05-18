@@ -15,7 +15,7 @@ enum AccountType
 class RegistAccount: public HttpCommon
 {
 public:
-	RegistAccount(const std::string &uri, const std::string &content);;
+	void FromProtocol(const std::string& path,const std::string& content);
 private:
 	AccountType m_account_type;
 	std::string m_account;

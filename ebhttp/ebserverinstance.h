@@ -7,6 +7,7 @@
 
 #include <map>
 #include <evpp/http/http_server.h>
+#include <ebexception.h>
 #include "../ebresult/ebdata.h"
 #include "../ebresult/ebresult.h"
 
@@ -53,11 +54,21 @@ void EBServerInstance::AddListener(const std::string &path, std::function<void( 
 	                                           const evpp::http::ContextPtr& ctx,
 	                                           const evpp::http::HTTPSendResponseCallback& cb){
 
-		auto msg = std::make_shared<T>(ctx->original_uri());
+		auto msg = std::make_shared<T>();
+
+		try
+		{
+			msg->FromProtocol(ctx->original_uri(),ctx->body().ToString());
+		}catch(eb_tools::EBException& e)
+		{
+			ctx->set_response_http_code(403);
+			cb(e.what().c_str());
+		}
+
 		msg->SetFindReqHeaderCallback([ctx](const std::string& key)->std::string{
 			return ctx->FindRequestHeader(key.c_str());
 		});
-		msg->SetResponse([ctx,cb](const eb_tools::EBResult& result,const std::map<std::string,std::string> response_header_map,const std::string& content){
+		msg->SetResponse([&msg,ctx,cb](const eb_tools::EBResult& result,const std::map<std::string,std::string> response_header_map){
 			if(!result)
 			{
 				ctx->set_response_http_code(403);
@@ -69,7 +80,8 @@ void EBServerInstance::AddListener(const std::string &path, std::function<void( 
 				{
 					ctx->AddResponseHeader(iter.first,iter.second);
 				}
-				cb(content);
+				std::string content = std::move(msg->ToProtocol());
+				cb(content.c_str());
 			}
 		});
 		handle(msg);

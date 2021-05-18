@@ -7,6 +7,6 @@ HttpCommon::~HttpCommon()
 {
 	if(m_response_fnc)
 	{
-		m_response_fnc(m_result,m_res_header,m_response);
+		m_response_fnc(m_result,m_res_header);
 	}
 }

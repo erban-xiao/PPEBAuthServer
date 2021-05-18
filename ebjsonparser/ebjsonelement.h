@@ -9,7 +9,7 @@
 #include <ebresult/ebdata.h>
 #include <ebresult/ebresult.h>
 #include <ebexception/ebexception.h>
-#include "third-party/rapidjson/document.h"
+#include "rapidjson/document.h"
 namespace eb_tools
 {
 class EBJsonElement
@@ -57,18 +57,16 @@ T EBJsonElement::GetSubNodeValue(const std::string &key, bool permit_null_node, 
     try {
         if (!m_node) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_no_node,
-                    "not find cur node"
+                EBResult(
+	                em_json_no_node,
+	                "not find cur node"
                 )
             );
         }
         if (!m_node->HasMember(key.c_str())) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_no_find_tar_node,
+                EBResult(
+                    em_json_no_find_tar_node,
                     "no find target node, key is : {0}", key
                 )
             );
@@ -76,9 +74,8 @@ T EBJsonElement::GetSubNodeValue(const std::string &key, bool permit_null_node, 
         auto node = &(*m_node)[key.c_str()];
         if (!node->Is<T>()) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_not_tar_type_node,
+                EBResult(
+                    em_json_not_tar_type_node,
                     "node is not target type :{0}", typeid(T).name())
             );
         }
@@ -100,18 +97,16 @@ T EBJsonElement::Get()
 {
     if (!m_node) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_no_node,
-                "not find cur node"
+            EBResult(
+	            em_json_no_node,
+	            "not find cur node"
             )
         );
     }
     if (!m_node->Is<T>()) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_json_not_tar_type_node,
+            EBResult(
+                em_json_not_tar_type_node,
                 "node is not target type :{0}", typeid(T).name())
         );
     }

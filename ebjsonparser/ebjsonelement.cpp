@@ -3,15 +3,17 @@
 //
 
 #include "ebjsonelement.h"
+#include "../ebresult/ebdata.h"
+#include "../ebresult/ebresult.h"
+#include "../ebexception/ebexception.h"
 using namespace eb_tools;
 EBJsonElement EBJsonElement::FindSubNode(const std::string &key, bool permit_null_node)
 {
     EBJsonElement element;
     if (!m_node) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_no_node,
+            EBResult(
+	            em_parse_no_node,
                 "not find cur node"
             )
         );
@@ -24,9 +26,8 @@ EBJsonElement EBJsonElement::FindSubNode(const std::string &key, bool permit_nul
         }
         else {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_no_find_tar_node,
+                EBResult(
+                    em_json_no_find_tar_node,
                     "not find target sub node ,key: {0}", key
                 )
             );
@@ -39,8 +40,7 @@ size_t EBJsonElement::GetArrayCount()
 {
     if (!m_node) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
+            EBResult(
                 em_parse_no_node,
                 "not find cur node"
             )
@@ -48,10 +48,9 @@ size_t EBJsonElement::GetArrayCount()
     }
     if (!m_node->IsArray()) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_json_not_array_node,
-                "json node not array node"
+            EBResult(
+	            em_json_not_array_node,
+	            "json node not array node"
             )
         );
     }
@@ -64,8 +63,7 @@ std::string EBJsonElement::GetSubNodeString(const std::string &key, bool permit_
     try {
         if (!m_node) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
+                EBResult(
                     em_parse_no_node,
                     "no find cur node"
                 )
@@ -73,20 +71,18 @@ std::string EBJsonElement::GetSubNodeString(const std::string &key, bool permit_
         }
         if (!m_node->HasMember(key.c_str())) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_no_find_tar_node,
-                    "no find target node, key is : {0}", key
+                EBResult(
+	                em_json_no_find_tar_node,
+	                "no find target node, key is : {0}", key
                 )
             );
         }
         auto node = &(*m_node)[key.c_str()];
         if (!node->IsString()) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_not_string_node,
-                    "node is not string type")
+                EBResult(
+	                em_json_not_string_node,
+	                "node is not string type")
             );
         }
         else {
@@ -109,8 +105,7 @@ long EBJsonElement::GetSubNodeLong(const std::string &key, bool permit_null_node
     try {
         if (!m_node) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
+                EBResult(
                     em_parse_no_node,
                     "no find cur node"
                 )
@@ -118,20 +113,18 @@ long EBJsonElement::GetSubNodeLong(const std::string &key, bool permit_null_node
         }
         if (!m_node->HasMember(key.c_str())) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_no_find_tar_node,
-                    "no find target node, key is : {0}", key
+                EBResult(
+	                em_json_no_find_tar_node,
+	                "no find target node, key is : {0}", key
                 )
             );
         }
         auto node = &(*m_node)[key.c_str()];
         if (!node->IsInt64()) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_not_long_node,
-                    "node is not long type")
+                EBResult(
+	                em_json_not_long_node,
+	                "node is not long type")
             );
         }
         else {
@@ -153,8 +146,7 @@ int EBJsonElement::GetSubNodeInt(const std::string &key, bool permit_null_node, 
     try {
         if (!m_node) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
+                EBResult(
                     em_parse_no_node,
                     "no find cur node"
                 )
@@ -162,20 +154,18 @@ int EBJsonElement::GetSubNodeInt(const std::string &key, bool permit_null_node, 
         }
         if (!m_node->HasMember(key.c_str())) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_no_find_tar_node,
-                    "no find target node, key is : {0}", key
+                EBResult(
+	                em_json_no_find_tar_node,
+	                "no find target node, key is : {0}", key
                 )
             );
         }
         auto node = &(*m_node)[key.c_str()];
         if (!node->IsInt()) {
             throw EBException(
-                EBResult<>(
-                    em_json_parser,
-                    em_parse_json_not_long_node,
-                    "node is not long type")
+                EBResult(
+	                em_json_not_long_node,
+	                "node is not long type")
             );
         }
         else {
@@ -195,8 +185,7 @@ EBJsonElement EBJsonElement::operator[](size_t index)
 {
     if (!m_node) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
+            EBResult(
                 em_parse_no_node,
                 "not find cur node"
             )
@@ -204,19 +193,17 @@ EBJsonElement EBJsonElement::operator[](size_t index)
     }
     if (!m_node->IsArray()) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_json_not_array_node,
-                "json node not array node"
+            EBResult(
+	            em_json_not_array_node,
+	            "json node not array node"
             )
         );
     }
     if (index >= m_node->Size()) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_json_array_index_overspill,
-                "index over spill,size is : {0},index is {0}", m_node->Size(), index
+            EBResult(
+	            em_json_array_index_overspill,
+	            "index over spill,size is : {0},index is {0}", m_node->Size(), index
             )
         );
     }
@@ -228,8 +215,7 @@ EBJsonElement EBJsonElement::operator[](size_t index) const
 {
     if (!m_node) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
+            EBResult(
                 em_parse_no_node,
                 "not find cur node"
             )
@@ -237,19 +223,17 @@ EBJsonElement EBJsonElement::operator[](size_t index) const
     }
     if (!m_node->IsArray()) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_json_not_array_node,
-                "json node not array node"
+            EBResult(
+	            em_json_not_array_node,
+	            "json node not array node"
             )
         );
     }
     if (index >= m_node->Size()) {
         throw EBException(
-            EBResult<>(
-                em_json_parser,
-                em_parse_json_array_index_overspill,
-                "index over spill,size is : {0},index is {0}", m_node->Size(), index
+            EBResult(
+	            em_json_array_index_overspill,
+	            "index over spill,size is : {0},index is {0}", m_node->Size(), index
             )
         );
     }

@@ -3,8 +3,7 @@
 //
 
 #include "registaccount.h"
-RegistAccount::RegistAccount(const std::string &uri, const std::string &content)
-	: HttpCommon(uri, content)
+void RegistAccount::FromProtocol(const std::string &path, const std::string &content)
 {
 
 }
