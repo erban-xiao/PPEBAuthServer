@@ -5,7 +5,7 @@
 #include <iostream>
 #include <queue>
 #include "ebresult/ebresult.h"
-#include "ebservermanager.h"
+#include "ebhttp/ebservermanager.h"
 #include "libco/co_routine.h"
 
 
@@ -55,25 +55,15 @@ void* Consumer(void* args)
 }
 
 
+
 int main(int argc, char *argv[])
 {
 #if 1
 	EBServerManager server_manager;
-	server_manager.AddListen(0, 1234, "/echo", [](evpp::EventLoop *loop,
-	                                              const evpp::http::ContextPtr &ctx,
-	                                              const evpp::http::HTTPSendResponseCallback &cb)
-	{
-		std::cout << "get message111111111111111111111" << std::endl;
-		cb(ctx->body().ToString());
-	});
-	std::cout << "start 22222222222222222" << std::endl;
-	server_manager.AddListen(0, 4321, "/path", [](evpp::EventLoop *loop,
-	                                              const evpp::http::ContextPtr &ctx,
-	                                              const evpp::http::HTTPSendResponseCallback &cb)
-	{
-		std::cout << "get message2222222222222222222" << std::endl;
-		cb(ctx->body().ToString());
-	});
+	auto instance = server_manager.CreateServerListen(0,1234);
+//	instance->AddListener("/echo",)
+//	instance->AddListener()
+//	instance->Start();
 #else
 	evpp::http::Server server_1(1);
 	{
@@ -105,23 +95,23 @@ int main(int argc, char *argv[])
 	}
 #endif
 
-	stEnv_t* env = new stEnv_t;
-	env->cond = co_cond_alloc();
+//	stEnv_t* env = new stEnv_t;
+//	env->cond = co_cond_alloc();
+//
+//
+//	stCoRoutine_t* consumer_routine;
+//	co_create(&consumer_routine, NULL, Consumer, env);
+//	co_resume(consumer_routine);
+//
+//	stCoRoutine_t* producer_routine;
+//	co_create(&producer_routine, NULL, Producer, env);
+//	co_resume(producer_routine);
+//
+//	co_eventloop(co_get_epoll_ct(), NULL, NULL);
 
-
-	stCoRoutine_t* consumer_routine;
-	co_create(&consumer_routine, NULL, Consumer, env);
-	co_resume(consumer_routine);
-
-	stCoRoutine_t* producer_routine;
-	co_create(&producer_routine, NULL, Producer, env);
-	co_resume(producer_routine);
-
-	co_eventloop(co_get_epoll_ct(), NULL, NULL);
-
-//	while (true)
-//	{
-//		usleep(1);
-//	}
+	while (true)
+	{
+		usleep(1);
+	}
 	return 0;
 }

@@ -82,10 +82,10 @@ public:
 	bool operator==(const EBResult &result);
 	EBResult &operator=(EBResult &&result);
 	EBResult &operator=(const EBResult &result);
-	explicit operator bool();
+	explicit operator bool() const noexcept;
 
 public:
-	std::string What();
+	std::string What() const;
 	static std::string
 	DefaultMessageFormatter(int code, const std::string &message, int line, const std::string &file_name, const std::string &func_name, bool success);
 

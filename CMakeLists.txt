@@ -12,6 +12,11 @@ link_directories(${LINK_SDIR})
 
 aux_source_directory(./ SRC_FILES_LIST)
 aux_source_directory(ebresult SRC_FILES_LIST)
+aux_source_directory(ebjsonparser SRC_FILES_LIST)
+aux_source_directory(ebbusinessprocess SRC_FILES_LIST)
+aux_source_directory(ebhttp SRC_FILES_LIST)
+aux_source_directory(ebhttp/protocol SRC_FILES_LIST)
+
 add_executable(${PROJECT_NAME} ${SRC_FILES_LIST})
 
 

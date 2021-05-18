@@ -225,12 +225,12 @@ eb_tools::EBResult &eb_tools::EBResult::operator=(const eb_tools::EBResult &resu
 	return *this;
 }
 
-eb_tools::EBResult::operator bool()
+eb_tools::EBResult::operator bool() const noexcept
 {
-	return m_success;
+	return m_result_code == 0;
 }
 
-std::string eb_tools::EBResult::What()
+std::string eb_tools::EBResult::What()const
 {
 	if (m_success)
 	{
