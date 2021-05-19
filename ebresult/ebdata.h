@@ -25,6 +25,9 @@ enum ResultCode
 	em_json_array_index_overspill,
 	em_json_no_node,
 	em_json_not_tar_type_node,
+
+	//protocol
+	em_reg_err_account_type,
 };
 }
 

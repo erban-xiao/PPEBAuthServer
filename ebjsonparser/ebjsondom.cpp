@@ -8,7 +8,7 @@
 #include "../ebexception/ebexception.h"
 using namespace eb_tools;
 using std::string;
-void EBJsoNDom::Parse(const std::string& content)
+void EBJsoNDom::Parse(const std::string &content)
 {
 	m_doc.Parse(content.c_str());
 	if (!m_doc.IsObject())
@@ -29,7 +29,7 @@ void EBJsoNDom::Parse(const std::string& content)
 	}
 }
 
-EBJsonElement EBJsoNDom::FindSubNode(const string& key, bool permit_null_node /*= false*/)
+EBJsonElement EBJsoNDom::FindSubNode(const string &key, bool permit_null_node /*= false*/)
 {
 	EBJsonElement element;
 	if (!m_doc.IsObject())
@@ -47,7 +47,7 @@ EBJsonElement EBJsoNDom::FindSubNode(const string& key, bool permit_null_node /*
 			return element;
 		}
 		else
-			throw EBException(EBResult( em_json_no_find_tar_node, "no find target node,key:{0}", key));
+			throw EBException(EBResult(em_json_no_find_tar_node, "no find target node,key:{0}", key));
 	}
 	return element;
 }
@@ -102,7 +102,7 @@ int EBJsoNDom::GetInt()
 	}
 }
 
-std::string EBJsoNDom::GetSubNodeString(const string& key, bool permit_null_node /*= false*/, const string& default_value /*= std::string()*/)
+std::string EBJsoNDom::GetSubNodeString(const string &key, bool permit_null_node /*= false*/, const string &default_value /*= std::string()*/)
 {
 	try
 	{
@@ -133,7 +133,7 @@ std::string EBJsoNDom::GetSubNodeString(const string& key, bool permit_null_node
 			);
 		}
 	}
-	catch (EBException& e)
+	catch (EBException &e)
 	{
 		if (permit_null_node)
 		{
@@ -146,7 +146,7 @@ std::string EBJsoNDom::GetSubNodeString(const string& key, bool permit_null_node
 	}
 }
 
-long EBJsoNDom::GetSubNodeLong(const string& key, bool permit_null_node, const long& default_value)
+long EBJsoNDom::GetSubNodeLong(const string &key, bool permit_null_node, const long &default_value)
 {
 	try
 	{
@@ -173,7 +173,7 @@ long EBJsoNDom::GetSubNodeLong(const string& key, bool permit_null_node, const l
 			return node->GetInt64();
 		}
 	}
-	catch (EBException& e)
+	catch (EBException &e)
 	{
 		if (permit_null_node)
 		{
@@ -186,7 +186,7 @@ long EBJsoNDom::GetSubNodeLong(const string& key, bool permit_null_node, const l
 	}
 }
 
-int EBJsoNDom::GetSubNodeInt(const string& key, bool permit_null_node, const int& default_int)
+int EBJsoNDom::GetSubNodeInt(const string &key, bool permit_null_node, const int &default_int)
 {
 	try
 	{
@@ -213,7 +213,7 @@ int EBJsoNDom::GetSubNodeInt(const string& key, bool permit_null_node, const int
 			return node->GetInt();
 		}
 	}
-	catch (EBException& e)
+	catch (EBException &e)
 	{
 		if (permit_null_node)
 		{
